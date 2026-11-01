@@ -1,5 +1,4 @@
-# Runs MySQL and the PHP API together:   docker compose up --build
-# API: http://localhost:8000/api/health
+
 services:
   db:
     image: mysql:8.4
