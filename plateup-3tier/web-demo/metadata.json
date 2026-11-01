@@ -1,0 +1,10 @@
+{
+  "name": "PlateUP - Recipe Finder & Meal Planner (Android Emulator)",
+  "description": "Discover delicious recipes from ingredients in your kitchen, reduce food waste, and view estimated calories.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
