@@ -32,20 +32,6 @@ The AI key lives only on the PHP server, never in the phone app.
 
 Use **Visual Studio Code** for `backend/`, `database/` and `web-demo/` (open this root folder, then Terminal → Run Task). The Kotlin app needs **Android Studio**.
 
-To add your icon, publish, and host the backend, read `DEPLOY.md`.
-
-## AI Chatbot API
-
-The PHP backend (`backend/src/Gemini.php`) calls Google's Gemini API:
-
-`POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent`
-
-Get a key at https://aistudio.google.com/apikey. Model docs: https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash
-
-## Status
-
-Written but **not yet run or compiled**: the build environment had no PHP, MySQL, Android SDK or internet. Expect to fix small
-errors on the first run (for example Gradle dependency versions that Android Studio offers to update).
 
 ## Authorship and AI use
 
