@@ -31,8 +31,3 @@ The AI key lives only on the PHP server, never in the phone app.
 **Then Android:** open `android/` in Android Studio and run on an emulator.
 
 Use **Visual Studio Code** for `backend/`, `database/` and `web-demo/` (open this root folder, then Terminal → Run Task). The Kotlin app needs **Android Studio**.
-
-
-## Authorship and AI use
-
-AI tools were used to help write this project. Record here, in your own words, how AI was used, as your school or employer requires.
