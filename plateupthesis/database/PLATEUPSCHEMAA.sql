@@ -1,5 +1,3 @@
--- PlateUP database (MySQL 8 / MariaDB 10.5+)
--- Import:  mysql -u root -p < database/schema.sql
 
 CREATE DATABASE IF NOT EXISTS plateup
   CHARACTER SET utf8mb4
@@ -7,7 +5,6 @@ CREATE DATABASE IF NOT EXISTS plateup
 
 USE plateup;
 
--- One row per registered person.
 CREATE TABLE IF NOT EXISTS users (
   id                  INT UNSIGNED NOT NULL AUTO_INCREMENT,
   name                VARCHAR(100)  NOT NULL,
@@ -21,7 +18,6 @@ CREATE TABLE IF NOT EXISTS users (
   UNIQUE KEY uq_users_email (email)
 ) ENGINE=InnoDB;
 
--- Login sessions for the mobile app. Only the SHA-256 hash of the token is stored.
 CREATE TABLE IF NOT EXISTS api_tokens (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id     INT UNSIGNED NOT NULL,
@@ -34,7 +30,6 @@ CREATE TABLE IF NOT EXISTS api_tokens (
   CONSTRAINT fk_tokens_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Ingredients the user has at home.
 CREATE TABLE IF NOT EXISTS pantry_items (
   id                 INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id            INT UNSIGNED NOT NULL,
@@ -51,7 +46,6 @@ CREATE TABLE IF NOT EXISTS pantry_items (
   CONSTRAINT fk_pantry_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Meals the user ate or cooked (calorie tracking).
 CREATE TABLE IF NOT EXISTS meals (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id     INT UNSIGNED NOT NULL,
@@ -68,7 +62,6 @@ CREATE TABLE IF NOT EXISTS meals (
   CONSTRAINT fk_meals_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- AI Chatbot conversation history (so the chat survives closing the app).
 CREATE TABLE IF NOT EXISTS chat_messages (
   id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id     INT UNSIGNED NOT NULL,
@@ -80,7 +73,6 @@ CREATE TABLE IF NOT EXISTS chat_messages (
   CONSTRAINT fk_chat_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Counts AI calls (chat, photo scan, recipes) per user per day so one account can't run up the Gemini bill.
 CREATE TABLE IF NOT EXISTS ai_usage (
   user_id  INT UNSIGNED NOT NULL,
   day      DATE NOT NULL,
@@ -89,7 +81,3 @@ CREATE TABLE IF NOT EXISTS ai_usage (
   CONSTRAINT fk_usage_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Create a least-privilege account for the PHP backend (change the password!):
--- CREATE USER 'plateup_app'@'localhost' IDENTIFIED BY 'change-this-password';
--- GRANT SELECT, INSERT, UPDATE, DELETE ON plateup.* TO 'plateup_app'@'localhost';
--- FLUSH PRIVILEGES;
