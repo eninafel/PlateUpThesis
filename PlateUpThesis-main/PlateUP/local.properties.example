@@ -1,0 +1,4 @@
+## Android Studio creates local.properties for you (it contains sdk.dir).
+## To switch on the AI features (chat, photo scan, AI recipes), add these two lines to it:
+GEMINI_API_KEY=paste-your-key-here
+GEMINI_MODEL=gemini-3.8-flash

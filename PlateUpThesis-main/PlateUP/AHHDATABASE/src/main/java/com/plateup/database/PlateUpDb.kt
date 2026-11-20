@@ -1,0 +1,38 @@
+package com.plateup.database
+
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+/**
+ * Opens (and the first time creates) the app's database file, plateup.db.
+ * The tables are defined in src/main/assets/plateup_schema.sql.
+ */
+class PlateUpDb(private val appContext: Context) : SQLiteOpenHelper(appContext, "plateup.db", null, 2) {
+
+    override fun onConfigure(db: SQLiteDatabase) {
+        super.onConfigure(db)
+        db.setForeignKeyConstraintsEnabled(true)
+    }
+
+    override fun onCreate(db: SQLiteDatabase) {
+        schemaStatements().forEach { db.execSQL(it) }
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        // Version 2 removed the calorie tracker. The old (now unused) daily_calorie_goal column is left
+        // in place on existing phones because it has a default value and nothing reads it.
+        if (oldVersion < 2) db.execSQL("DROP TABLE IF EXISTS meals")
+    }
+
+    /** Reads plateup_schema.sql and splits it into single statements. */
+    private fun schemaStatements(): List<String> {
+        val sql = appContext.assets.open("plateup_schema.sql").bufferedReader().use { it.readText() }
+        return sql.lineSequence()
+            .filterNot { it.trimStart().startsWith("--") }
+            .joinToString("\n")
+            .split(";")
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+    }
+}
